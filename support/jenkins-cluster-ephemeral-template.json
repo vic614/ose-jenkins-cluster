@@ -127,10 +127,6 @@
                 "strategy": {
                     "type": "Docker",
                     "dockerStrategy": {
-                        "from": {
-                            "kind": "ImageStreamTag",
-                            "name": "${JENKINS_IMAGE_TAG}"
-                        }
                     }
                 },
                 "output": {
@@ -171,10 +167,6 @@
                 "strategy": {
                     "type": "Docker",
                     "dockerStrategy": {
-                        "from": {
-                            "kind": "ImageStreamTag",
-                            "name": "rhel7:latest"
-                        }
                     }
                 },
                 "output": {
@@ -440,12 +432,12 @@
         {
             "name": "GIT_URI",
             "description": "Git Repository",
-            "value": "https://github.com/sabre1041/ose-jenkins-cluster.git"
+            "value": "https://github.com/vic614/ose-jenkins-cluster.git"
         },
         {
             "name": "GIT_REF",
             "description": "Git Branch",
-            "value": "master"
+            "value": "fix/all"
         },
         {
             "name": "EXECUTORS",

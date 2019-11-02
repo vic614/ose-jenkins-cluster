@@ -228,7 +228,7 @@
                     "type": "Recreate",
                     "resources": {
 			"cpu": "300m",
-			"memory": "1Gi"
+			"memory": "1.5Gi"
 		    }
                 },
                 "triggers": [

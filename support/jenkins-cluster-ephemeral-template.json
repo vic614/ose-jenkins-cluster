@@ -124,6 +124,12 @@
                      },
                      "contextDir": "jenkins"
                 },
+                "resources":{
+                    "limits": {
+                         "cpu": "200m",
+                         "memory": "1Gi"
+                     }
+                },
                 "strategy": {
                     "type": "Docker",
                     "dockerStrategy": {
@@ -163,6 +169,12 @@
                          "ref": "${GIT_REF}"
                      },
                      "contextDir": "jenkins-slave"
+                },
+                "resources":{
+                    "limits": {
+                         "cpu": "200m",
+			 "memory": "1Gi"
+                     }
                 },
                 "strategy": {
                     "type": "Docker",
@@ -214,7 +226,10 @@
             "spec": {
                 "strategy": {
                     "type": "Recreate",
-                    "resources": {}
+                    "resources": {
+			"cpu": "300m",
+			"memory": "1Gi"
+		    }
                 },
                 "triggers": [
                     {

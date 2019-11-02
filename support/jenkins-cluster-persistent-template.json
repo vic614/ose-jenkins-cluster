@@ -126,12 +126,7 @@
                 },
                 "strategy": {
                     "type": "Docker",
-                    "dockerStrategy": {
-                        "from": {
-                            "kind": "ImageStreamTag",
-                            "name": "${JENKINS_IMAGE_TAG}"
-                        }
-                    }
+                    "dockerStrategy": {}
                 },
                 "output": {
                     "to": {
@@ -170,12 +165,7 @@
                 },
                 "strategy": {
                     "type": "Docker",
-                    "dockerStrategy": {
-                        "from": {
-                            "kind": "ImageStreamTag",
-                            "name": "rhel7:latest"
-                        }
-                    }
+                    "dockerStrategy": {}
                 },
                 "output": {
                     "to": {
@@ -457,12 +447,12 @@
         {
             "name": "GIT_URI",
             "description": "Git Repository",
-            "value": "https://github.com/sabre1041/ose-jenkins-cluster.git"
+            "value": "https://github.com/vic614/ose-jenkins-cluster.git"
         },
         {
             "name": "GIT_REF",
             "description": "Git Branch",
-            "value": "master"
+            "value": "fix/all"
         },
         {
             "name": "EXECUTORS",
@@ -477,7 +467,7 @@
         {
             "name": "VOLUME_CAPACITY",
             "description": "Volume space available for data, e.g. 512Mi, 2Gi",
-            "value": "512Mi",
+            "value": "1Gi",
             "required": true
         }
 

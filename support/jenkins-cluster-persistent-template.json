@@ -128,6 +128,12 @@
                     "type": "Docker",
                     "dockerStrategy": {}
                 },
+                "resources": {
+                    "limits": {
+                            "cpu": "200m",
+                            "memory": "1Gi"
+                        }
+		},
                 "output": {
                     "to": {
                         "kind": "ImageStreamTag",
@@ -167,6 +173,12 @@
                     "type": "Docker",
                     "dockerStrategy": {}
                 },
+		"resources": {
+		    "limits": {
+			    "cpu": "200m",
+			    "memory": "1Gi"
+			}
+		},
                 "output": {
                     "to": {
                         "kind": "ImageStreamTag",
@@ -288,7 +300,12 @@
                                         "value": "-Dhudson.slaves.NodeProvisioner.recurrencePeriod=${SLAVE_RECCURENCE_PERIOD},-Dhudson.slaves.NodeProvisioner.initialDelay=100,-Dhudson.slaves.NodeProvisioner.MARGIN=100"
                                     }
                                 ],
-                                "resources": {},
+                                "resources": {
+				    "limits": {
+					    "cpu": "200m",
+					    "memory": "2Gi"
+					}
+				},
                                 "volumeMounts": [
                                     {
                                         "name": "${APPLICATION_NAME}-data",

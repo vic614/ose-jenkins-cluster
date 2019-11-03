@@ -11,6 +11,27 @@
     },
     "objects": [
         {
+            "kind": "RoleBinding",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${APPLICATION_NAME}",
+                "labels": {
+                    "application": "${APPLICATION_NAME}"
+                }
+            },
+            "subjects": [
+              {
+                "kind": "ServiceAccount",
+                "name": "default"
+              }
+            ],
+            "roleRef": {
+              "apiGroup": "rbac.authorization.k8s.io",
+              "kind": "ClusterRole",
+              "name": "edit"
+            }
+        },
+        {
             "kind": "ImageStream",
             "apiVersion": "v1",
             "metadata": {
@@ -227,8 +248,10 @@
                 "strategy": {
                     "type": "Recreate",
                     "resources": {
-			"cpu": "300m",
-			"memory": "1.5Gi"
+                        "limits": {
+                            "cpu":"100m",
+                            "memory":"1Gi"
+                        }
 		    }
                 },
                 "triggers": [
@@ -288,7 +311,12 @@
                                         "value": "-Dhudson.slaves.NodeProvisioner.recurrencePeriod=${SLAVE_RECCURENCE_PERIOD},-Dhudson.slaves.NodeProvisioner.initialDelay=100,-Dhudson.slaves.NodeProvisioner.MARGIN=100"
                                     }
                                 ],
-                                "resources": {},
+                                "resources": {
+                                    "limits":{
+                                        "cpu":"200m",
+                                        "memory":"2Gi"
+                                    }
+                                },
                                 "volumeMounts": [
                                     {
                                         "name": "${APPLICATION_NAME}-data",

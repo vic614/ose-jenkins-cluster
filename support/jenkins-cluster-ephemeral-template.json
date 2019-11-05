@@ -20,15 +20,15 @@
                 }
             },
             "subjects": [
-              {
-                "kind": "ServiceAccount",
-                "name": "default"
-              }
+                {
+                    "kind": "ServiceAccount",
+                    "name": "default"
+                }
             ],
             "roleRef": {
-              "apiGroup": "rbac.authorization.k8s.io",
-              "kind": "ClusterRole",
-              "name": "edit"
+                "apiGroup": "rbac.authorization.k8s.io",
+                "kind": "ClusterRole",
+                "name": "edit"
             }
         },
         {
@@ -51,26 +51,26 @@
                 }
             }
         },
-		{
-		    "kind": "ImageStream",
-		    "apiVersion": "v1",
-		    "metadata": {
-		        "name": "rhel7"
-		    },
-			"spec": {
-				"dockerImageRepository": "registry.access.redhat.com/rhel7/rhel"
-			}
-		},
-		{
-		    "kind": "ImageStream",
-		    "apiVersion": "v1",
-		    "metadata": {
-		        "name": "ose-jenkins"
-		    },
-			"spec": {
-				"dockerImageRepository": "registry.access.redhat.com/openshift3/jenkins-1-rhel7"
-			}
-		},
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "rhel7"
+            },
+            "spec": {
+                "dockerImageRepository": "registry.access.redhat.com/rhel7/rhel"
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "ose-jenkins"
+            },
+            "spec": {
+                "dockerImageRepository": "registry.access.redhat.com/openshift3/jenkins-1-rhel7"
+            }
+        },
         {
             "kind": "Service",
             "apiVersion": "v1",
@@ -127,7 +127,7 @@
                 "sessionAffinity": "None"
             }
         },
-		{
+        {
             "kind": "BuildConfig",
             "apiVersion": "v1",
             "metadata": {
@@ -139,21 +139,22 @@
             "spec": {
                 "source": {
                     "type": "Git",
-                     "git": {
-                         "uri": "${GIT_URI}",
-                         "ref": "${GIT_REF}"
-                     },
-                     "contextDir": "jenkins"
+                    "git": {
+                        "uri": "${GIT_URI}",
+                        "ref": "${GIT_REF}"
+                    },
+                    "contextDir": "jenkins"
                 },
-                "resources":{
+                "resources": {
                     "limits": {
-                         "cpu": "200m",
-                         "memory": "1Gi"
-                     }
+                        "cpu": "200m",
+                        "memory": "1Gi"
+                    }
                 },
                 "strategy": {
                     "type": "Docker",
                     "dockerStrategy": {
+                        "pullStra"
                     }
                 },
                 "output": {
@@ -163,17 +164,17 @@
                     }
                 },
                 "triggers": [
-		            {
-		                "type": "ConfigChange"
-		            },
+                    {
+                        "type": "ConfigChange"
+                    },
                     {
                         "type": "ImageChange",
                         "imageChange": {}
                     }
                 ]
             }
-		},
-		{
+        },
+        {
             "kind": "BuildConfig",
             "apiVersion": "v1",
             "metadata": {
@@ -185,22 +186,21 @@
             "spec": {
                 "source": {
                     "type": "Git",
-                     "git": {
-                         "uri": "${GIT_URI}",
-                         "ref": "${GIT_REF}"
-                     },
-                     "contextDir": "jenkins-slave"
+                    "git": {
+                        "uri": "${GIT_URI}",
+                        "ref": "${GIT_REF}"
+                    },
+                    "contextDir": "jenkins-slave"
                 },
-                "resources":{
+                "resources": {
                     "limits": {
-                         "cpu": "200m",
-			 "memory": "1Gi"
-                     }
+                        "cpu": "200m",
+                        "memory": "1Gi"
+                    }
                 },
                 "strategy": {
                     "type": "Docker",
-                    "dockerStrategy": {
-                    }
+                    "dockerStrategy": {}
                 },
                 "output": {
                     "to": {
@@ -209,16 +209,16 @@
                     }
                 },
                 "triggers": [
-		            {
-		                "type": "ConfigChange"
-		            },
+                    {
+                        "type": "ConfigChange"
+                    },
                     {
                         "type": "ImageChange",
                         "imageChange": {}
                     }
                 ]
             }
-		},
+        },
         {
             "kind": "Route",
             "apiVersion": "v1",
@@ -249,10 +249,10 @@
                     "type": "Recreate",
                     "resources": {
                         "limits": {
-                            "cpu":"100m",
-                            "memory":"1Gi"
+                            "cpu": "100m",
+                            "memory": "1Gi"
                         }
-		    }
+                    }
                 },
                 "triggers": [
                     {
@@ -312,9 +312,9 @@
                                     }
                                 ],
                                 "resources": {
-                                    "limits":{
-                                        "cpu":"200m",
-                                        "memory":"2Gi"
+                                    "limits": {
+                                        "cpu": "200m",
+                                        "memory": "2Gi"
                                     }
                                 },
                                 "volumeMounts": [
@@ -347,69 +347,69 @@
                     }
                 }
             }
-		},
-		{
-		    "kind": "DeploymentConfig",
-		    "apiVersion": "v1",
-		    "metadata": {
-		        "name": "${APPLICATION_NAME}-slave",
-		        "creationTimestamp": null,
-		        "labels": {
-		            "application": "${APPLICATION_NAME}-slave"
-		        }
-		    },
-		    "spec": {
-		        "strategy": {
-		            "type": "Rolling",
-		            "rollingParams": {
-		                "updatePeriodSeconds": 1,
-		                "intervalSeconds": 1,
-		                "timeoutSeconds": 600
-		            },
-		            "resources": {}
-		        },
-		        "triggers": [
-		            {
-		                "type": "ConfigChange"
-		            },
-		            {
-		                "type": "ImageChange",
-		                "imageChangeParams": {
-		                    "automatic": true,
-		                    "containerNames": [
-		                        "${APPLICATION_NAME}-slave"
-		                    ],
-		                    "from": {
-		                        "kind": "ImageStreamTag",
-		                        "name": "${APPLICATION_NAME}-slave:latest"
-		                    }
-		                }
-		            }
-		        ],
-		        "replicas": 1,
-		        "selector": {
-		            "application": "${APPLICATION_NAME}-slave",
-		            "deploymentconfig": "${APPLICATION_NAME}-slave"
-		        },
-		        "template": {
-		            "metadata": {
-		                "creationTimestamp": null,
-		                "labels": {
-		                    "application": "${APPLICATION_NAME}-slave",
-		                    "deploymentconfig": "${APPLICATION_NAME}-slave"
-		                }
-		            },
-		            "spec": {
-		                "volumes": [
-		                    {
-		                        "name": "${APPLICATION_NAME}-slave-data",
-		                        "emptyDir": {}
-		                    }
-		                ],
-		                "containers": [
-		                    {
-		                        "name": "${APPLICATION_NAME}-slave",
-		                        "image": "${APPLICATION_NAME}-slave",
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${APPLICATION_NAME}-slave",
+                "creationTimestamp": null,
+                "labels": {
+                    "application": "${APPLICATION_NAME}-slave"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600
+                    },
+                    "resources": {}
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "${APPLICATION_NAME}-slave"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "${APPLICATION_NAME}-slave:latest"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "selector": {
+                    "application": "${APPLICATION_NAME}-slave",
+                    "deploymentconfig": "${APPLICATION_NAME}-slave"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "application": "${APPLICATION_NAME}-slave",
+                            "deploymentconfig": "${APPLICATION_NAME}-slave"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "${APPLICATION_NAME}-slave-data",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "${APPLICATION_NAME}-slave",
+                                "image": "${APPLICATION_NAME}-slave",
                                 "env": [
                                     {
                                         "name": "JENKINS_PASSWORD",
@@ -424,26 +424,26 @@
                                         "value": ""
                                     }
                                 ],
-		                        "resources": {},
-		                        "volumeMounts": [
-		                            {
-		                                "name": "${APPLICATION_NAME}-slave-data",
-		                                "mountPath": "/var/lib/jenkins"
-		                            }
-		                        ],
-		                        "terminationMessagePath": "/dev/termination-log",
-		                        "imagePullPolicy": "Always"
-		                    }
-		                ],
-		                "restartPolicy": "Always",
-		                "terminationGracePeriodSeconds": 30,
-		                "dnsPolicy": "ClusterFirst",
-		                "securityContext": {}
-		            }
-		        }
-		    },
-		    "status": {}
-		}
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "${APPLICATION_NAME}-slave-data",
+                                        "mountPath": "/var/lib/jenkins"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {}
+        }
     ],
     "parameters": [
         {
@@ -452,9 +452,9 @@
             "value": "jenkins"
         },
         {
-           "description": "Custom hostname.  Leave blank for default hostname, e.g.: <application-name>.<project>.<default-domain-suffix>",
-           "name": "APPLICATION_HOSTNAME",
-           "displayName": "Application hostname"
+            "description": "Custom hostname.  Leave blank for default hostname, e.g.: <application-name>.<project>.<default-domain-suffix>",
+            "name": "APPLICATION_HOSTNAME",
+            "displayName": "Application hostname"
         },
         {
             "name": "JENKINS_PASSWORD",

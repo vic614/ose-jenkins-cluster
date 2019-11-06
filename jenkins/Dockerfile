@@ -6,7 +6,7 @@ ADD config-cloud.xml credentials.xml /opt/openshift/
 RUN mkdir -p /opt/openshift/plugins && \
           cat /opt/openshift/credentials.xml > /opt/openshift/configuration/credentials.xml && \
 		  curl -sSL -f https://updates.jenkins-ci.org/download/plugins/credentials/2.3.0/credentials.hpi -o /opt/openshift/plugins/credentials.jpi && \
-		  curl -sSL -f https://updates.jenkins-ci.org/download/plugins/kubernetes/1.21.1/kubernetes.hpi -o /opt/openshift/plugins/kubernetes.jpi && \
+		  curl -sSL -f https://updates.jenkins-ci.org/download/plugins/kubernetes/1.18.2/kubernetes.hpi -o /opt/openshift/plugins/kubernetes.jpi && \
 		  touch /opt/openshift/plugins/credentials.jpi.pinned && \
 		  sed -i "s|<slaveAgentPort>.*</slaveAgentPort>|<slaveAgentPort>50000</slaveAgentPort>|" "/opt/openshift/configuration/config.xml.tpl" && \
 		  sed -i "s|<numExecutors>.*</numExecutors>|<numExecutors>0</numExecutors>|" "/opt/openshift/configuration/config.xml.tpl" && \

@@ -1,0 +1,2 @@
+FROM 34.68.7.115:8123/jenkons-oc:latest
+RUN echo hi
